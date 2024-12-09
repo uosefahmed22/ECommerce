@@ -4,7 +4,6 @@ using ECommerce.Core.Models.Auth;
 using ECommerce.Repository.Data;
 using MailKit.Security;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -257,7 +256,7 @@ namespace ECommerce.Repository.Services
         }
 
         //Handle Token
-        public async Task<ApiResponse> RefreshToken([FromBody] TokenRequest model)
+        public async Task<ApiResponse> RefreshToken( TokenRequest model)
         {
             try
             {
@@ -278,7 +277,7 @@ namespace ECommerce.Repository.Services
             }
 
         }
-        public async Task<ApiResponse> RevokeToken([FromBody] TokenRequest model)
+        public async Task<ApiResponse> RevokeToken( TokenRequest model)
         {
             try
             {

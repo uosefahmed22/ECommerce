@@ -80,8 +80,8 @@ namespace ECommerce.Repository.Services
                         Quantity = (long)item.Quantity,
                     }).ToList(),
                     Mode = "payment",
-                    SuccessUrl = "http://localhost:4200/Orders",
-                    CancelUrl = "http://localhost:4200/Cart",
+                    SuccessUrl = "https://uosefahmed22.github.io/ECommerceInAngular/Orders",
+                    CancelUrl = "https://uosefahmed22.github.io/ECommerceInAngular/Orders/Cart",
                 };
 
                 // 5. Create Stripe payment session

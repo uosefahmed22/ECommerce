@@ -111,8 +111,11 @@ namespace ECommerce.Repository.Repositories
                         Size = p.Size,
                         Stock = p.Stock,
                         ImageCoverUrl = p.ImageCoverUrl,
-                        AverageRating = GetAverageRating(p.Id, _dbContext),
-                        RatingCount = GetRatingCount(p.Id, _dbContext),
+                        RatingAverage = _dbContext.Ratings
+                            .Where(r => r.ProductId == p.Id)
+                            .Average(r => (double?)r.RatingValue) ?? 0,
+                        RatingCount = _dbContext.Ratings
+                            .Count(r => r.ProductId == p.Id),
                         Category = new
                         {
                             Id = p.Category.Id,
@@ -149,8 +152,11 @@ namespace ECommerce.Repository.Repositories
                         Size = p.Size,
                         Stock = p.Stock,
                         ImageCoverUrl = p.ImageCoverUrl,
-                        AverageRating = GetAverageRating(p.Id, _dbContext),
-                        RatingCount = GetRatingCount(p.Id, _dbContext),
+                        RatingAverage = _dbContext.Ratings
+                            .Where(r => r.ProductId == p.Id)
+                            .Average(r => (double?)r.RatingValue) ?? 0,
+                        RatingCount = _dbContext.Ratings
+                            .Count(r => r.ProductId == p.Id),
                         Category = new
                         {
                             Id = p.Category.Id,
@@ -188,8 +194,11 @@ namespace ECommerce.Repository.Repositories
                         Stock = p.Stock,
                         ImageCoverUrl = p.ImageCoverUrl,
                         productImagesUrls = p.productImagesUrls,
-                        AverageRating = GetAverageRating(p.Id, _dbContext),
-                        RatingCount = GetRatingCount(p.Id, _dbContext),
+                        RatingAverage = _dbContext.Ratings
+                            .Where(r => r.ProductId == p.Id)
+                            .Average(r => (double?)r.RatingValue) ?? 0,
+                        RatingCount = _dbContext.Ratings
+                            .Count(r => r.ProductId == p.Id),
                         Category = new
                         {
                             Id = p.Category.Id,
@@ -233,8 +242,11 @@ namespace ECommerce.Repository.Repositories
                         Size = p.Size,
                         Stock = p.Stock,
                         ImageCoverUrl = p.ImageCoverUrl,
-                        AverageRating = GetAverageRating(p.Id, _dbContext),
-                        RatingCount = GetRatingCount(p.Id, _dbContext),
+                        AverageRating = _dbContext.Ratings
+                            .Where(r => r.ProductId == p.Id)
+                            .Average(r => (double?)r.RatingValue) ?? 0,
+                        RatingCount = _dbContext.Ratings
+                            .Count(r => r.ProductId == p.Id),
                         CategoryDto = new CategoryDto
                         {
                             Id = p.Category.Id,
@@ -327,36 +339,6 @@ namespace ECommerce.Repository.Repositories
                 return new ApiResponse(500, $"An error occurred while rating the product: {ex.Message}");
             }
 
-        }
-        private static double GetAverageRating(int productId, AppDbContext dbContext)
-        {
-            var ratings = dbContext.Ratings
-                .Where(r => r.ProductId == productId);
-
-            if (!ratings.Any())
-            {
-                return 0;
-            }
-
-            var averageRating = ratings.Average(r => r.RatingValue);
-
-            if (averageRating < 0)
-            {
-                averageRating = 0;
-            }
-            else if (averageRating > 5)
-            {
-                averageRating = 5;
-            }
-
-            return averageRating;
-        }
-        private static int GetRatingCount(int productId, AppDbContext dbContext)
-        {
-            var ratingCount = dbContext.Ratings
-                .Where(r => r.ProductId == productId)
-                .Count();
-            return ratingCount;
         }
     }
 }

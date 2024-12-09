@@ -67,8 +67,9 @@ namespace ECommerce.Apis.Extentions
             StripeConfiguration.ApiKey = configuration["StripeSettings:Secretkey"];
             services.AddLogging();
 
-            //Redis Configuration
-            var redisConfiguration = configuration.GetSection("Redis")["ConnectionString"];
+            // Redis Configuration
+            var redisConfiguration = configuration.GetValue<string>("Redis:ConnectionString");
+
             if (string.IsNullOrEmpty(redisConfiguration))
             {
                 throw new ArgumentNullException("Redis:ConnectionString", "Redis connection string is not configured.");

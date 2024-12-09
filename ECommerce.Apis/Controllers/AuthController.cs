@@ -193,7 +193,7 @@ namespace ECommerce.Apis.Controllers
 
             if (result)
             {
-                return RedirectPermanent(@"http://localhost:4200/login");
+                return RedirectPermanent(@"https://uosefahmed22.github.io/ECommerceInAngular/login");
             }
             else
             {
